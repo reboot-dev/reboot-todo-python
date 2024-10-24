@@ -1,0 +1,8 @@
+protoc api/
+protoc --python=api
+protoc --react=api
+
+dev run --name=reboot-todo
+dev run --watch=backend/**/*.py
+dev run --python
+dev run --application=backend/src/main.py

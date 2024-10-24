@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+package todos.v1;
+
+import "google/protobuf/timestamp.proto";
+import "rbt/v1alpha1/options.proto";
+
+////////////////////////////////////////////////////////////////////////
+
+message Todo {
+  option (rbt.v1alpha1.state) = {};
+  
+  TodoDetails details = 1;
+}
+
+////////////////////////////////////////////////////////////////////////
+
+message TodoList {
+  option (rbt.v1alpha1.state) = {};
+
+  repeated string todo_ids = 1;
+}
+
+////////////////////////////////////////////////////////////////////////
+
+service TodoInterface {
+  rpc Details(DetailsRequest) returns (DetailsResponse) {
+    option (rbt.v1alpha1.method).reader = {};
+  }
+
+  rpc Create(CreateRequest) returns (CreateResponse) {
+    option (rbt.v1alpha1.method).writer = {};
+  }
+
+  rpc Complete(CompleteRequest) returns (CompleteResponse) {
+    option (rbt.v1alpha1.method).writer = {};
+  }
+}
+
+////////////////////////////////////////////////////////////////////////
+
+service TodoListInterface {
+  rpc Add(AddRequest) returns (AddResponse) {
+    option (rbt.v1alpha1.method).transaction = {};
+  }
+
+  rpc Remove(RemoveRequest) returns (RemoveResponse) {
+    option (rbt.v1alpha1.method).writer = {};
+  }
+
+  rpc List(ListRequest) returns (ListResponse) {
+    option (rbt.v1alpha1.method).reader = {};
+  }
+}
+
+////////////////////////////////////////////////////////////////////////
+
+message TodoDetails {
+  string name = 1;
+  bool done = 2;
+  google.protobuf.Timestamp deadline = 3;
+  bool warned = 4;
+}
+
+////////////////////////////////////////////////////////////////////////
+
+message DetailsRequest {}
+
+message DetailsResponse {
+  TodoDetails details = 1;
+}
+
+////////////////////////////////////////////////////////////////////////
+
+message CreateRequest {
+  TodoDetails details = 1;
+}
+
+message CreateResponse {}
+
+////////////////////////////////////////////////////////////////////////
+
+message CompleteRequest {}
+
+message CompleteResponse {}
+
+////////////////////////////////////////////////////////////////////////
+
+message AddRequest {
+  TodoDetails details = 1;
+}
+
+message AddResponse {}
+
+////////////////////////////////////////////////////////////////////////
+
+message RemoveRequest {
+  string todo_id = 1;
+}
+
+message RemoveResponse {}
+
+////////////////////////////////////////////////////////////////////////
+
+message ListRequest {}
+
+message ListResponse {
+  map<string, TodoDetails> details = 1;
+}
+
+////////////////////////////////////////////////////////////////////////

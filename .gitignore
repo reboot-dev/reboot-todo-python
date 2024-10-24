@@ -1,0 +1,12 @@
+.venv/
+.rbt/
+api/**/__pycache__/
+api/**/*.py*
+api/**/*.ts
+api/dist/
+backend/**/__pycache__/
+web/src/api/**/*.ts
+web/src/api/**/*.d.ts
+web/src/api/**/*.js
+dist/
+node_modules/
