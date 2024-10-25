@@ -29,7 +29,7 @@ This method requires running [VSCode](https://code.visualstudio.com/) on your ma
 This repository includes a [Dev Container config](./.devcontainer/devcontainer.json) (more about [Dev Containers](https://containers.dev/)) that declares all of the dependencies that you need to build and run the example. Dev Containers can be started locally with VSCode, but we recommend using GitHub's [Codespaces](https://github.com/features/codespaces) to quickly launch the Dev Container:
 
 1. Right-click to create a Codespace in a new tab or window:
-    * [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/reboot-dev/reboot-todo-starter)
+    * [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/reboot-dev/reboot-todo-python)
     * *Important*: In order to view the example's front end, you must connect your local VSCode to the codespace: you cannot use VSCode in a browser window.
 2. Go to [https://github.com/codespaces](https://github.com/codespaces) and click the three dots next to the codespace you just created and then click `Open in Visual Studio Code`.
     * You can [set your default editor to VSCode for codespaces](https://docs.github.com/en/codespaces/customizing-your-codespace/setting-your-default-editor-for-github-codespaces) to avoid this step in the future. See [these instructions](https://docs.github.com/en/codespaces/developing-in-codespaces/opening-an-existing-codespace?tool=vscode) for more information.
@@ -44,8 +44,8 @@ Running directly on a host requires:
 - A platform of either:
    - `x86_64 Linux` with `glibc>=2.35` (Ubuntu Jammy and other equivalent-generation Linux distributions)
    - `arm64 or x86_64 MacOS` with `MacOS>=13.0` and `Xcode>=14.3`
-- Node.js
-    - Including `npm`.
+- Python >=3.10
+- Node.js (for the front end)
 - Docker
     - Note: the example does not run "inside of" Docker, but Docker is used to host a native support service for local development.
 
@@ -58,18 +58,19 @@ Now you're ready to [run the application](#run-the-application)!
 
 ### Backend
 
-Our backend is implemented in TypeScript and we must install its dependencies before
+Our backend is implemented in Python and we must install its dependencies before
 running it.
 
 ```sh
-npm install
+python3 -m venv ./.venv && source .venv/bin/activate && pip install -r requirements.txt
 ```
 
 #### Run the backend
 
-Then, to run the application, you can use the Reboot CLI `rbt`:
+Then, to run the application, you can use the Reboot CLI `rbt` (but only within the virtual environment you set up above):
+
 ```shell
-npx rbt dev run
+rbt dev run
 ```
 
 Running `rbt dev run` will watch for file modifications and restart the
@@ -80,8 +81,9 @@ arguments that get expanded when running `rbt dev run`.
 
 To run the front end, open a separate terminal/shell and do:
 ```shell
+npm install
 npm run dev:web
 ```
 
 If using VSCode, the page will load automatically.
-If not using VSCode, visit [http://127.0.0.1:3000](http://127.0.0.1:3000)`.
+If not using VSCode, visit [localhost:3000](http://localhost:3000)`.
