@@ -6,7 +6,7 @@ const TodoItem = ({
   handleDelete,
 }: {
   id: string;
-  details: { [key: string]: TodoDetails };
+  details: TodoDetails;
   handleDelete: (todoId: string) => void;
 }) => {
   const todo = useTodo({ id });
