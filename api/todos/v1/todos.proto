@@ -15,23 +15,28 @@ message Todo {
 
 ////////////////////////////////////////////////////////////////////////
 
-message TodoList {
-  option (rbt.v1alpha1.state) = {};
-
-  repeated string todo_ids = 1;
+// Details of a `Todo` that we pass to e.g., front end.
+message TodoDetails {
+  string name = 1;
+  bool done = 2;
+  google.protobuf.Timestamp deadline = 3;
+  bool warned = 4;
 }
 
 ////////////////////////////////////////////////////////////////////////
 
 service TodoInterface {
+  // Returns the details of the todo.
   rpc Details(DetailsRequest) returns (DetailsResponse) {
     option (rbt.v1alpha1.method).reader = {};
   }
 
+  // Initializes the todo.
   rpc Create(CreateRequest) returns (CreateResponse) {
     option (rbt.v1alpha1.method).writer = {};
   }
 
+  // Marks the todo as done.
   rpc Complete(CompleteRequest) returns (CompleteResponse) {
     option (rbt.v1alpha1.method).writer = {};
   }
@@ -39,27 +44,30 @@ service TodoInterface {
 
 ////////////////////////////////////////////////////////////////////////
 
-service TodoListInterface {
-  rpc Add(AddRequest) returns (AddResponse) {
-    option (rbt.v1alpha1.method).transaction = {};
-  }
+message TodoList {
+  option (rbt.v1alpha1.state) = {};
 
-  rpc Remove(RemoveRequest) returns (RemoveResponse) {
-    option (rbt.v1alpha1.method).writer = {};
-  }
-
-  rpc List(ListRequest) returns (ListResponse) {
-    option (rbt.v1alpha1.method).reader = {};
-  }
+  // List of all the `Todo`'s that are part of this todo list.
+  repeated string todo_ids = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////
 
-message TodoDetails {
-  string name = 1;
-  bool done = 2;
-  google.protobuf.Timestamp deadline = 3;
-  bool warned = 4;
+service TodoListInterface {
+  // Creates a new `Todo` and adds it to this list. 
+  rpc Add(AddRequest) returns (AddResponse) {
+    option (rbt.v1alpha1.method).transaction = {};
+  }
+
+  // Removes an existing `Todo` from this list.
+  rpc Remove(RemoveRequest) returns (RemoveResponse) {
+    option (rbt.v1alpha1.method).writer = {};
+  }
+
+  // Returns all of `TodoDetails` for this todo list.
+  rpc List(ListRequest) returns (ListResponse) {
+    option (rbt.v1alpha1.method).reader = {};
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////
