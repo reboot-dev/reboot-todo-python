@@ -85,5 +85,4 @@ npm install
 npm run dev:web
 ```
 
-If using VSCode, the page will load automatically.
-If not using VSCode, visit [localhost:3000](http://localhost:3000)`.
+If using VSCode, the page should load automatically, or you can visit [`localhost:3000`](http://localhost:3000).
