@@ -7,9 +7,11 @@ const DEADLINES: Deadline[] = ["minute", "hour", "day"];
 const InputContainer = ({
   handleSubmit,
 }: {
-  handleSubmit: ( e: FormEvent<HTMLFormElement>,
+  handleSubmit: (
+    e: FormEvent<HTMLFormElement>,
     name: string,
-    deadline: Date) => void;
+    deadline: Date
+  ) => void;
 }) => {
   const [name, setName] = useState("");
   const [deadline, setDeadline] = useState<Deadline>("minute");
